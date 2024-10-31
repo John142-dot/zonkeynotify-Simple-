@@ -1,0 +1,17 @@
+local Notifyboy = Loadstring(game:HttpGet('https://raw.githubusercontent.com/John142-dot/zonkeynotify-Simple-/refs/heads/main/notifyui1'))()
+local mainNotifyInstance = Notifyboy.new(true)
+
+mainNotifyInstance:ShowNotification({
+    Title = "Notification Title",
+    Text = "This is an announcement message.",
+    Duration = 5,
+    Type = "announce"
+})
+
+local secondaryNotifyInstance = Notifyboy.new(false)
+secondaryNotifyInstance:ShowNotification({
+    Title = "Warning Title",
+    Text = "This is a warning message.",
+    Duration = 5,
+    Type = "warning"
+})
