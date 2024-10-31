@@ -1,0 +1,106 @@
+local TweenService = game:GetService("TweenService")
+local NotificationService = game:GetService("StarterGui")
+
+local Notifyboy = {}
+Notifyboy.__index = Notifyboy
+
+function Notifyboy.new(isMainController)
+    local self = setmetatable({}, Notifyboy)
+    self.MainController = isMainController or false
+    return self
+end
+
+function Notifyboy:ShowNotification(args)
+    local TITLE = args.Title or "Default Title"
+    local TEXT = args.Text or "Default Notification Message"
+    local DURATION = args.Duration or 5
+    local TYPE = args.Type or "announce"
+
+    local SCREEN_GUI = Instance.new("ScreenGui")
+    SCREEN_GUI.Parent = NotificationService
+
+    local NOTIFICATION_FRAME = Instance.new("Frame")
+    NOTIFICATION_FRAME.Size = UDim2.new(0.25, 0, 0, 0)
+    NOTIFICATION_FRAME.Position = UDim2.new(1, 0, 1, 0)
+    NOTIFICATION_FRAME.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    NOTIFICATION_FRAME.BackgroundTransparency = 1
+    NOTIFICATION_FRAME.BorderSizePixel = 0
+    NOTIFICATION_FRAME.Parent = SCREEN_GUI
+
+    local UICorner = Instance.new("UICorner")
+    UICorner.CornerRadius = UDim.new(0.1, 0)
+    UICorner.Parent = NOTIFICATION_FRAME
+
+    local UIPadding = Instance.new("UIPadding")
+    UIPadding.PaddingTop = UDim.new(0.05, 0)
+    UIPadding.PaddingBottom = UDim.new(0.05, 0)
+    UIPadding.PaddingLeft = UDim.new(0.02, 0)
+    UIPadding.PaddingRight = UDim.new(0.02, 0)
+    UIPadding.Parent = NOTIFICATION_FRAME
+
+    local TITLE_LABEL = Instance.new("TextLabel")
+    TITLE_LABEL.Size = UDim2.new(1, 0, 0.5, 0)
+    TITLE_LABEL.Text = TITLE:upper()
+    TITLE_LABEL.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TITLE_LABEL.BackgroundTransparency = 1
+    TITLE_LABEL.Font = Enum.Font.GothamBold
+    TITLE_LABEL.TextScaled = true
+    TITLE_LABEL.Parent = NOTIFICATION_FRAME
+
+    local TEXT_LABEL = Instance.new("TextLabel")
+    TEXT_LABEL.Size = UDim2.new(1, 0, 0.5, 0)
+    TEXT_LABEL.Position = UDim2.new(0, 0, 0.5, 0)
+    TEXT_LABEL.Text = TEXT
+    TEXT_LABEL.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TEXT_LABEL.BackgroundTransparency = 1
+    TEXT_LABEL.Font = Enum.Font.Gotham
+    TEXT_LABEL.TextScaled = true
+    TEXT_LABEL.Parent = NOTIFICATION_FRAME
+
+    local LINE = Instance.new("Frame")
+    LINE.Size = UDim2.new(1, 0, 0.05, 0)
+    LINE.Position = UDim2.new(0, 0, 1, 0)
+
+    if TYPE == "announce" then
+        LINE.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+    elseif TYPE == "warning" then
+        LINE.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    elseif TYPE == "success" then
+        LINE.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+    else
+        LINE.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+    end
+
+    LINE.Parent = NOTIFICATION_FRAME
+
+    local LINE_CORNER = Instance.new("UICorner")
+    LINE_CORNER.CornerRadius = UDim.new(0.1, 0)
+    LINE_CORNER.Parent = LINE
+
+    local UIListLayout = Instance.new("UIListLayout")
+    UIListLayout.FillDirection = Enum.FillDirection.Vertical
+    UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    UIListLayout.Parent = NOTIFICATION_FRAME
+
+    NOTIFICATION_FRAME.Size = UDim2.new(0.25, 0, 0, NOTIFICATION_FRAME.AbsoluteContentSize.Y)
+
+    local fadeInTween = TweenService:Create(NOTIFICATION_FRAME, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0})
+    local moveInTween = TweenService:Create(NOTIFICATION_FRAME, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0.75, 0, 0.8, 0)})
+
+    SCREEN_GUI.Enabled = true
+    fadeInTween:Play()
+    moveInTween:Play()
+
+    wait(DURATION)
+
+    local fadeOutTween = TweenService:Create(NOTIFICATION_FRAME, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1})
+    local moveOutTween = TweenService:Create(NOTIFICATION_FRAME, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(1, 0, 1, 0)})
+
+    fadeOutTween:Play()
+    moveOutTween:Play()
+
+    fadeOutTween.Completed:Wait()
+    SCREEN_GUI:Destroy()
+end
+
+return Notifyboy
