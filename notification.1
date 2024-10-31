@@ -1,0 +1,130 @@
+local ScreenGui = Instance.new("ScreenGui")
+local NotificationFrame = Instance.new("Frame")
+local NotificationText = Instance.new("TextLabel")
+local UIStroke = Instance.new("UIStroke")
+local UICorner = Instance.new("UICorner")
+local NotificationSound = Instance.new("Sound")
+local Gradient = Instance.new("UIGradient")
+
+ScreenGui.Name = "NotificationGui"
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+NotificationFrame.Name = "NotificationFrame"
+NotificationFrame.Size = UDim2.new(0, 350, 0, 120)
+NotificationFrame.Position = UDim2.new(-1, 0, 1, 0)
+NotificationFrame.BackgroundTransparency = 0.3
+NotificationFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+NotificationFrame.AnchorPoint = Vector2.new(0, 1)
+NotificationFrame.Parent = ScreenGui
+
+UIStroke.Thickness = 2
+UIStroke.Parent = NotificationFrame
+
+Gradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 223, 0)), 
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 255, 102)), 
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 223, 0))
+}
+Gradient.Rotation = 45
+Gradient.Parent = UIStroke
+
+UICorner.CornerRadius = UDim.new(0, 15)
+UICorner.Parent = NotificationFrame
+
+NotificationText.Name = "NotificationText"
+NotificationText.Size = UDim2.new(0.9, 0, 0.9, 0) -- Adding padding by slightly reducing size
+NotificationText.Position = UDim2.new(0.05, 0, 0.05, 0) -- Centering text within frame
+NotificationText.BackgroundTransparency = 1
+NotificationText.Text = "This is a notification!"
+NotificationText.TextColor3 = Color3.fromRGB(255, 255, 255)
+NotificationText.TextScaled = true
+NotificationText.TextWrapped = true
+NotificationText.TextStrokeTransparency = 0.5
+NotificationText.Parent = NotificationFrame
+
+NotificationSound.SoundId = "rbxassetid://YOUR_SOUND_ID"
+NotificationSound.Parent = NotificationFrame
+
+local isShowing = false
+
+local function showNotification(message)
+    NotificationText.Text = message
+    NotificationFrame.Visible = true
+    NotificationSound:Play()
+
+    NotificationFrame:TweenPosition(UDim2.new(0, 10, 1, -10), Enum.EasingDirection.Out, Enum.EasingStyle.Back, 0.5, true)
+    wait(3)
+
+    NotificationFrame:TweenPosition(UDim2.new(-1, 0, 1, -10), Enum.EasingDirection.Out, Enum.EasingStyle.Back, 0.5, true)
+    wait(0.5)
+    NotificationFrame.Visible = false
+end
+
+showNotification("Welcome to the game!")
+
+--// local extraNotification = true
+
+if extraNotification then
+    showNotification("You have new messages!")
+end
+-- Remove the "--//"s to use.
+--// local ScreenGui = Instance.new("ScreenGui")
+--// local NotificationFrame = Instance.new("Frame")
+--// local NotificationText = Instance.new("TextLabel")
+--// local UIStroke = Instance.new("UIStroke")
+--// local UICorner = Instance.new("UICorner")
+--// local NotificationSound = Instance.new("Sound")
+
+--// ScreenGui.Name = "NotificationGui"
+--// ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+--// NotificationFrame.Name = "NotificationFrame"
+--// NotificationFrame.Size = UDim2.new(0, 350, 0, 120)
+--// NotificationFrame.Position = UDim2.new(-1, 0, 1, 0)
+--// NotificationFrame.BackgroundTransparency = 0.3
+--// NotificationFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+--// NotificationFrame.AnchorPoint = Vector2.new(0, 1)
+--// NotificationFrame.Parent = ScreenGui
+
+--// UIStroke.Thickness = 2
+--// UIStroke.Color = Color3.fromRGB(255, 215, 0)
+--// UIStroke.Parent = NotificationFrame
+
+--// UICorner.CornerRadius = UDim.new(0, 15)
+--// UICorner.Parent = NotificationFrame
+
+--// NotificationText.Name = "NotificationText"
+--// NotificationText.Size = UDim2.new(1, 0, 1, 0)
+--// NotificationText.BackgroundTransparency = 1
+--// NotificationText.Text = "This is a notification!"
+--// NotificationText.TextColor3 = Color3.fromRGB(255, 255, 255)
+--// NotificationText.TextScaled = true
+--// NotificationText.TextWrapped = true
+--// NotificationText.TextStrokeTransparency = 0.5
+--// NotificationText.Parent = NotificationFrame
+
+--// NotificationSound.SoundId = "rbxassetid://YOUR_SOUND_ID"
+--// NotificationSound.Parent = NotificationFrame
+
+--// local isShowing = false
+
+--// local function showNotification(message)
+--//     NotificationText.Text = message
+--//     NotificationFrame.Visible = true
+--//     NotificationSound:Play()
+
+--//     NotificationFrame:TweenPosition(UDim2.new(0, 10, 1, -10), Enum.EasingDirection.Out, Enum.EasingStyle.Back, 0.5, true)
+--//     wait(3)
+
+--//     NotificationFrame:TweenPosition(UDim2.new(-1, 0, 1, -10), Enum.EasingDirection.Out, Enum.EasingStyle.Back, 0.5, true)
+--//     wait(0.5)
+--//     NotificationFrame.Visible = false
+--// end
+
+--// showNotification("Welcome to the game!")
+
+--// --// local extraNotification = true -- Uncomment to enable the extra notification option
+
+--// if extraNotification then
+--//     showNotification("You have new messages!")
+--// end
